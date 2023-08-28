@@ -1,40 +1,53 @@
 #include<stdio.h>
-#include<conio.h>
 
-int main()
+#include<ctype.h>
 
-{
-    int i, key;
-    char str[100],c;
+int main() {
 
-    printf("Enter a PT:");
-    gets(str);
-    printf("enter key:");
-    scanf("%d",&key);
+    char text[500], ch;
 
-    for(i=0;str[i]!='\0';i++)
-    {
-        c = str[i];
-        if(c>='a' && c<='z')
-        {
-            c=c+key;
-            if(c>'z')
-            {
-              c = c-'z' + 'a'-1;
+    int key;
+
+    // Taking user input.
+
+    printf("Enter a message to decrypt: ");
+
+    scanf("%s", text);
+
+    printf("Enter the key: ");
+
+    scanf("%d", & key);
+
+    // Visiting each character.
+    for (int i = 0; text[i] != '\0'; ++i) {
+
+        ch = text[i];
+        // Check for valid characters.
+        if (isalnum(ch)) {
+            //Lowercase characters.
+            if (islower(ch)) {
+                ch = (ch - 'a' - key + 26) % 26 + 'a';
             }
-            str[i] = c;
+            // Uppercase characters.
+            if (isupper(ch)) {
+                ch = (ch - 'A' - key + 26) % 26 + 'A';
+            }
+            // Numbers.
+            if (isdigit(ch)) {
+                ch = (ch - '0' - key + 10) % 10 + '0';
+            }
         }
-        else if(c>='A' && c<='Z')
-          {
-            c=c+key;
-            if(c>'Z')
-            {
-              c = c-'Z' + 'A'-1;
-            }
-            str[i] = c;
-          }
+        // Invalid characters.
+        else {
+            printf("Invalid Message");
+        }
+        // Adding decoded character back.
+        text[i] = ch;
+
     }
 
- printf("encrypted msg :%s",str);
- return 0;
+    printf("Decrypted message: %s", text);
+
+    return 0;
+
 }
