@@ -1,53 +1,59 @@
-#include<stdio.h>
 
-#include<ctype.h>
+#include <stdio.h>
 
-int main() {
+int main()
+{
+char pt[100],ch;
+int shift;
+   printf("Enter a message to encrypt: ");
 
-    char text[500], ch;
+    scanf("%s", pt);
 
-    int key;
+    printf("Enter number of shift: ");
 
-    // Taking user input.
-
-    printf("Enter a message to decrypt: ");
-
-    scanf("%s", text);
-
-    printf("Enter the key: ");
-
-    scanf("%d", & key);
-
-    // Visiting each character.
-    for (int i = 0; text[i] != '\0'; ++i) {
-
-        ch = text[i];
-        // Check for valid characters.
-        if (isalnum(ch)) {
-            //Lowercase characters.
-            if (islower(ch)) {
-                ch = (ch - 'a' - key + 26) % 26 + 'a';
-            }
-            // Uppercase characters.
-            if (isupper(ch)) {
-                ch = (ch - 'A' - key + 26) % 26 + 'A';
-            }
-            // Numbers.
-            if (isdigit(ch)) {
-                ch = (ch - '0' - key + 10) % 10 + '0';
-            }
+    scanf("%d",  &shift);
+    for(int i=0;pt[i]!='\0';++i)
+    {
+        ch=pt[i];
+        if(ch>='a' || ch<='z')
+        {
+            ch=ch+shift;
+    
+        if(ch>'z'){
+            ch=ch-'z'+'a'-1;
         }
-        // Invalid characters.
-        else {
-            printf("Invalid Message");
+        pt[i] = ch;
         }
-        // Adding decoded character back.
-        text[i] = ch;
-
+        else if(ch>='A' || ch<='Z'){
+            ch=ch+shift;
+        if(ch > 'Z'){
+        ch = ch - 'Z' + 'A' - 1;
+        }
+        pt[i] = ch;
+        }
     }
-
-    printf("Decrypted message: %s", text);
-
+    printf("Encrypted message: %s", pt);
+    //printf("Enter a message to decrypt: ");
+    //printf("%s",pt);
+    //printf("Enter shift: ");
+    //scanf("%d", &shift);
+    for(int i = 0; pt[i] != '\0'; ++i){
+    ch = pt[i];
+    if(ch >= 'a' && ch <= 'z'){
+    ch = ch - shift;
+    if(ch < 'a'){
+    ch = ch + 'z' - 'a' + 1;
+    }
+    pt[i] = ch;
+    }
+    else if(ch >= 'A' && ch <= 'Z'){
+    ch = ch - shift;
+    if(ch < 'A'){
+    ch = ch + 'Z' - 'A' + 1;
+    }
+    pt[i] = ch;
+    }
+    }
+    printf("\nDecrypted message: %s", pt);
     return 0;
-
 }
