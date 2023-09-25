@@ -1,4 +1,4 @@
-//week5 -4
+ //week5 -4
 #include <stdio.h>
 #include <math.h>
 
